@@ -65,6 +65,8 @@ async function option_open() {
   if (confirm("Replace existing notes?")) {
     user_things.value = txt;
   }
+
+  input.value = null;
 }
 
 document.addEventListener("DOMContentLoaded", () => {
