@@ -1,3 +1,5 @@
+let user_things;
+let record_count = 0;
 let mode = false;
 
 function switch_modes() {
@@ -15,31 +17,57 @@ function switch_modes() {
   mode = !mode;
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  let apps = document.querySelector(".apps-c");
-
-  function createUtilities() {
-    let utility_container = document.createElement("div");
-    let utility_image = document.createElement("img");
-    let utility_title = document.createElement("p");
-
-    utility_container.classList.add("utility-c");
-    utility_image.classList.add("utility-img");
-    utility_title.classList.add("utility-title");
-
-    utility_container.onclick = () => logg();
-    utility_container.appendChild(utility_image);
-    utility_container.appendChild(utility_title);
-
-    apps.appendChild(utility_container);
+async function option_new() {
+  if (!confirm("Clear all?")) {
+    return;
   }
 
-  createUtilities();
-  createUtilities();
-  createUtilities();
-  createUtilities();
-});
+  user_things.value = "";
 
-function logg() {
-  console.log("hello, world");
+  let temp = user_things.style.backgroundColor;
+
+  user_things.style.backgroundColor = mode
+    ? "var(--light-mode-color)"
+    : "var(--dark-mode-color)";
+  await new Promise((resolve) => setTimeout(resolve, 100));
+  user_things.style.backgroundColor = "transparent";
 }
+
+function option_save() {
+  let blob = new Blob([user_things.value], {
+    type: "text/plain;charset=utf-8",
+  });
+
+  let filename =
+    prompt("Input file name:", "netpad-record-" + ++record_count) + ".txt";
+
+  if (window.navigator.msSaveOrOpenBlob)
+    window.navigator.msSaveOrOpenBlob(blob, filename);
+  else {
+    var a = document.createElement("a"),
+      url = URL.createObjectURL(blob);
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function () {
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    }, 0);
+  }
+}
+
+async function option_open() {
+  let input = document.getElementById("fileSelector");
+  let file = input.files[0];
+  let txt = await file.text();
+
+  if (confirm("Replace existing notes?")) {
+    user_things.value = txt;
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  // Fetch element when the DOM is loaded
+  user_things = document.getElementById("user");
+});

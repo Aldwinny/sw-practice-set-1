@@ -14,19 +14,34 @@
       rel="stylesheet"
     />
 
-    <title>Home | Ubiquitous Utilities</title>
+    <title>Netpad</title>
   </head>
   <body class="bdy-dark">
     <header>
       <div class="title-c">
-        <div class="title">Ubiquitous Utilities</div>
+        <div class="title">Netpad</div>
         <div class="clickable" onclick="switch_modes()">
           <span class="material-icons" id="toggle-theme">dark_mode</span>
         </div>
       </div>
     </header>
+    <nav>
+      <div class="nav-c">
+        <div onclick="option_new()">New</div>
+        <div onclick="option_save()">Save</div>
+        <div>
+          <input
+            id="fileSelector"
+            type="file"
+            accept=".txt"
+            onchange="option_open()"
+          />
+          <label for="fileSelector">Open</label>
+        </div>
+      </div>
+    </nav>
     <content>
-      <div class="apps-c"></div>
+      <textarea id="user"></textarea>
     </content>
   </body>
 </html>

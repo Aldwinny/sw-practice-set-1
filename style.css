@@ -1,15 +1,22 @@
+:root {
+  --light-mode-theme: rgb(228, 221, 173);
+  --dark-mode-theme: rgb(36, 13, 58);
+
+  --light-mode-color: rgb(73, 73, 73);
+  --dark-mode-color: rgb(235, 235, 235);
+}
+
 body {
   transition-duration: 500ms;
   margin: 0;
-  background-color: rgb(79, 171, 207);
-  color: rgb(204, 204, 204);
-  text-shadow: 2px 3px 5px black;
+  background-color: var(--light-mode-theme);
+  color: var(--light-mode-color);
 }
 
 body.bdy-dark {
-  background-color: rgb(38, 13, 58); /* rgb(25, 56, 68);  rgb(52, 153, 111)   */
+  background-color: var(--dark-mode-theme);
 
-  color: rgb(235, 235, 235);
+  color: var(--dark-mode-color);
   text-shadow: none;
 }
 
@@ -27,7 +34,14 @@ body.bdy-dark {
   justify-content: space-between;
 
   padding: 10px 30px;
-  margin-bottom: 15vh;
+
+  border: 1px solid var(--light-mode-color);
+  border-bottom: 0;
+}
+
+body.bdy-dark .title-c {
+  border: 1px solid var(--dark-mode-color);
+  border-bottom: 0;
 }
 
 .clickable {
@@ -35,20 +49,61 @@ body.bdy-dark {
   user-select: none;
 }
 
-.apps-c {
-  transition-duration: 700ms;
+.nav-c {
+  transition-duration: 400ms;
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: baseline;
   flex-wrap: wrap;
+
+  padding: 0 20px;
+
+  border: 1px solid var(--light-mode-color);
 }
 
-.utility-c {
-  width: 50px;
-  height: 50px;
-  background-color: blue;
+body.bdy-dark .nav-c {
+  border: 1px solid var(--dark-mode-color);
 }
 
-.utility {
-  border-radius: 5px;
+.nav-c div {
+  padding: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.nav-c div:hover {
+  text-decoration: underline;
+}
+
+content {
+  margin-top: 3vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+content textarea {
+  width: 95%;
+  height: 70vh;
+  margin: 10px;
+  padding: 10px;
+  background-color: transparent;
+  text-align: justify;
+
+  font-size: 25px;
+  color: var(--light-mode-color);
+  border: solid 1px var(--light-mode-color);
+
+  line-height: 35px;
+
+  resize: vertical;
+}
+
+#fileSelector {
+  display: none;
+}
+
+body.bdy-dark content textarea {
+  color: var(--dark-mode-color);
+  border: solid 1px var(--dark-mode-color);
 }
